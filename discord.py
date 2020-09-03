@@ -3,8 +3,6 @@ import random
 
 
 
-class MyClient(discord.Client):
-    #Einloggen
     async def on_ready(self):
         await client.change_presence(status=discord.Status.online, activity=discord.Game('$help'))
         print('Ich habe mich eingeloggt. beep bop.')
@@ -50,7 +48,3 @@ class MyClient(discord.Client):
                 await message.channel.send('$$$ Du hast gewonnen!!! $$$')
             else:
                 await message.channel.send('Leider verloren:(')
-
-
-client = MyClient()
-client.run('NzQzMjMxMjcyNzM3OTY0MDYz.XzRqDw.T5FRTMHafMrH79rKMC4IPklc8lw')
