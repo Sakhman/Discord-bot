@@ -2,6 +2,7 @@ import discord
 import random
 
 
+
 class MyClient(discord.Client):
     #Einloggen
     async def on_ready(self):
@@ -20,7 +21,7 @@ class MyClient(discord.Client):
 
         if message.content.startswith('$help'):
             await message.channel.send('Ich habe sie dir per DM Nachricht gesendet!!!')
-            await message.author.send('Commands: $roulette [red, black, eine Zahl von 0 bis 36] | $social')
+            await message.author.send('Commands: $roulette [red, black,oder eine Zahl von 0 bis 36] | $social')
 
 
         if message.content.startswith('$roulette '):
