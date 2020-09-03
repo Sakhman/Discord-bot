@@ -1,7 +1,5 @@
 import discord
-from discord.utils import get
 import random
-
 
 
 class MyClient(discord.Client):
@@ -51,13 +49,6 @@ class MyClient(discord.Client):
                 await message.channel.send('$$$ Du hast gewonnen!!! $$$')
             else:
                 await message.channel.send('Leider verloren:(')
-
-
-            if message.context.startswith('$play'):
-                where = message.content.split(' ')[1]
-                channel = get(message.guild.channels, name=where)
-                voicechannel = await channel.connect()
-                voicechannel.play(discord.FFmpegPCMAudio('lol.mp3'))
 
 
 client = MyClient()
