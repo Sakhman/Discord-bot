@@ -28,6 +28,7 @@ class PlayCommand(commands.Cog):
 		if voicec:
 			channel = voicec.channel
 			if channel:
+				
 
 				songname = f'songs/{ctx.guild.id}_current.mp3'
 				#songname = f'songs/{ctx.guild.id}_current.opus'
@@ -45,18 +46,6 @@ class PlayCommand(commands.Cog):
 				#voice = await channel.connect()
 				voice = ctx.message.guild.voice_client
 				#await ctx.send('➡️ Verbunden mit dem Voicechannel!')
-				ydl_opts = {
-					'format': 'bestaudio/best',
-					'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
-					'default_search': 'auto',
-					'noplaylist': True,
-					'postprocessors': [{
-						'key': 'FFmpegExtractAudio',
-						#'preferredcodec': 'mp3',
-						'preferredcodec': 'opus',
-						'preferredquality': '192'
-					}]
-				}
 				
 				if voice.is_playing():
 					queue.append(str(url))
@@ -65,6 +54,7 @@ class PlayCommand(commands.Cog):
 				
 				else:
 					async def bot_play_music():
+						print(f"Play {queue}")
 						voice = ctx.message.guild.voice_client
 						
 						voice.play(discord.FFmpegPCMAudio(songname), after=await queue_check())
@@ -72,15 +62,33 @@ class PlayCommand(commands.Cog):
 						voice.source.volume = 1.00
 						if len(queue) > 0:
 							await ctx.send(f"📀 Music ({queue[0]}) wird jetzt abgespielt!")
+							queue.remove(queue[0])
+
 						else:
-							await ctx.send(f'📀Music wird abgespielt!')
+							await ctx.send('📀 Music wird abgespielt!')
+
 						print('Ok.')
 						
 					async def download_convert(name):
+						print(f"Download Convert {queue}")
 						
 						if song_there:
 							os.remove(songname)
 							print("Alte Datei gelöscht.")
+
+
+						ydl_opts = {
+						'format': 'bestaudio/best',
+						'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
+						'default_search': 'auto',
+						'noplaylist': True,
+						'nosteram': True,
+							'postprocessors': [{
+							'key': 'FFmpegExtractAudio',
+							#'preferredcodec': 'mp3',
+							'preferredcodec': 'opus',
+							'preferredquality': '192'
+							}]}
 
 						with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 							print('Downloading audio now\n')
@@ -98,15 +106,12 @@ class PlayCommand(commands.Cog):
 
 
 					async def queue_check():
+						print(f"Queue Check {queue}")
 						
 						if len(queue) > 0 and len(queue) != 0:
 							await download_convert(queue[0])
-							queue.remove(queue[0])
 						else:
 							print("Queue gestoppt")
-
-
-					
 					
 					await download_convert([url])
 
