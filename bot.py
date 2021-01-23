@@ -50,7 +50,6 @@ class PlayCommand(commands.Cog):
 					'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
 					'default_search': 'auto',
 					'noplaylist': True,
-					'nosteram': True,
 					'postprocessors': [{
 						'key': 'FFmpegExtractAudio',
 						#'preferredcodec': 'mp3',
@@ -74,7 +73,7 @@ class PlayCommand(commands.Cog):
 						if len(queue) > 0:
 							await ctx.send(f"📀 Music ({queue[0]}) wird jetzt abgespielt!")
 						else:
-							await ctx.send('📀 Music wird abgespielt!')
+							await ctx.send(f'📀Music wird abgespielt!')
 						print('Ok.')
 						
 					async def download_convert(name):
